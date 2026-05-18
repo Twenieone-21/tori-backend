@@ -4,8 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-  "build": "ls src && vite build"
-}
+    "build": "ls src && vite build"
   },
   "dependencies": {
     "react": "^19.2.6",
