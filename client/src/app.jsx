@@ -6,7 +6,7 @@ import Sales from "./pages/Sales";
 import Inventory from "./pages/Inventory";
 import Reports from "./pages/Reports";
 
-const API_BASE = "https://tori-backend-kdum.onrender.com";
+const API_BASE = import.meta.env.VITE_API_URL || "https://tori-backend-kdum.onrender.com";
 
 function App() {
   const [inventory, setInventory] = useState([]);
