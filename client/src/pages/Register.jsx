@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Zap, Eye, EyeOff, Loader2 } from 'lucide-react';
 
-const API_BASE = import.meta.env.VITE_API_URL || "https://tori-backend-kdum.onrender.com";
+const API_BASE = "https://tori-backend-kdum.onrender.com";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ const Register = () => {
     setError('');
 
     try {
-      const res = await fetch(`${API_BASE}/api/auth/register`, {
+      const res = await fetch(API_BASE + '/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
@@ -38,11 +38,8 @@ const Register = () => {
         throw new Error(data.message || 'Registration failed');
       }
 
-      // Save token
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
-
-      // Redirect to dashboard
       navigate('/dashboard');
     } catch (err) {
       setError(err.message);
@@ -54,7 +51,6 @@ const Register = () => {
   return (
     <div className="min-h-screen bg-slate-50 flex items-center justify-center px-4">
       <div className="w-full max-w-md">
-        {/* Logo */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-12 h-12 bg-blue-600 rounded-xl mb-4">
             <Zap className="w-7 h-7 text-white" />
@@ -63,7 +59,6 @@ const Register = () => {
           <p className="text-slate-600 mt-1">Start your 7-day free trial</p>
         </div>
 
-        {/* Form */}
         <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-8">
           {error && (
             <div className="mb-4 p-3 bg-red-50 text-red-600 text-sm rounded-lg">
