@@ -13,11 +13,12 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // CORS - allow frontend to connect
+const allowedOrigins = process.env.FRONTEND_URL 
+  ? [process.env.FRONTEND_URL, 'http://localhost:5173']
+  : ['http://localhost:5173'];
+
 app.use(cors({
-  origin: [
-    'http://localhost:5173',
-    'https://tori-backend-1v9khgae-camilles-projects-5efb956f.vercel.app'
-  ],
+  origin: allowedOrigins,
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
