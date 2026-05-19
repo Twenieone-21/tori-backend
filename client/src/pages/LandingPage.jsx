@@ -342,23 +342,25 @@ const LandingPage = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              { step: "01", title: "Sign Up", desc: "Create your account in less than 2 minutes. No credit card required.", icon: <Users className="w-6 h-6 text-blue-600" /> },
-              { step: "02", title: "Add Your Products", desc: "Input your items, prices, and stock levels. Or import from a spreadsheet.", icon: <Package className="w-6 h-6 text-emerald-600" /> },
-              { step: "03", title: "Start Selling", desc: "Open your store and process sales with just a few clicks.", icon: <ShoppingCart className="w-6 h-6 text-violet-600" /> }
-            ].map((item, i) => (
-              <div key={i} className="relative">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="text-5xl font-bold text-slate-100">{item.step}</div>
-                  <div className="w-12 h-12 rounded-xl bg-slate-50 flex items-center justify-center">
-                    {item.icon}
-                  </div>
-                </div>
-                <h3 className="text-xl font-semibold text-slate-900 mb-3">{item.title}</h3>
-                <p className="text-slate-600 leading-relaxed">{item.desc}</p>
-              </div>
-            ))}
-          </div>
+  {[
+    { step: "01", title: "Sign Up", desc: "Create your account in less than 2 minutes. No credit card required.", icon: <Users className="w-6 h-6 text-blue-600" />, color: "bg-blue-600" },
+    { step: "02", title: "Add Your Products", desc: "Input your items, prices, and stock levels. Or import from a spreadsheet.", icon: <Package className="w-6 h-6 text-emerald-600" />, color: "bg-emerald-500" },
+    { step: "03", title: "Start Selling", desc: "Open your store and process sales with just a few clicks.", icon: <ShoppingCart className="w-6 h-6 text-violet-600" />, color: "bg-violet-500" }
+  ].map((item, i) => (
+    <div key={i} className="relative">
+      <div className="flex items-center gap-4 mb-6">
+        <div className={`w-16 h-16 rounded-2xl ${item.color} flex items-center justify-center text-white text-2xl font-bold shadow-lg shadow-blue-600/20`}>
+          {item.step}
+        </div>
+        <div className="w-12 h-12 rounded-xl bg-slate-50 flex items-center justify-center border border-slate-100">
+          {item.icon}
+        </div>
+      </div>
+      <h3 className="text-xl font-semibold text-slate-900 mb-3">{item.title}</h3>
+      <p className="text-slate-600 leading-relaxed">{item.desc}</p>
+    </div>
+  ))}
+</div>
         </div>
       </section>
 
