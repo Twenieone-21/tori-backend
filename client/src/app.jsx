@@ -9,7 +9,7 @@ import LandingPage from "./pages/LandingPage";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const API_BASE = "https://tori-backend-kdum.onrender.com";
 
 // Protected route wrapper
 const ProtectedRoute = ({ children }) => {
