@@ -9,7 +9,6 @@ const userSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now }
 });
 
-// Add comparePassword method
 userSchema.methods.comparePassword = async function(candidatePassword) {
   return this.password === candidatePassword;
 };
