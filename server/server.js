@@ -12,7 +12,10 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// CORS - allow ALL origins (simplest fix)
+// Handle preflight requests
+app.options('*', cors());
+
+// CORS - allow ALL origins
 app.use(cors({
   origin: '*',
   credentials: true,
