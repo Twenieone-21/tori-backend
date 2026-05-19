@@ -1,7 +1,8 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { LogOut } from "lucide-react";
 
 const navItems = [
-  { path: "/", label: "Dashboard", icon: "dashboard" },
+  { path: "/dashboard", label: "Dashboard", icon: "dashboard" },
   { path: "/sales", label: "Sales", icon: "sales" },
   { path: "/inventory", label: "Inventory", icon: "inventory" },
   { path: "/reports", label: "Reports", icon: "reports" },
@@ -9,6 +10,13 @@ const navItems = [
 
 function Sidebar() {
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    navigate("/login");
+  };
 
   const getIcon = (name) => {
     const icons = {
@@ -65,6 +73,17 @@ function Sidebar() {
           </Link>
         ))}
       </nav>
+
+      {/* Logout Button */}
+      <div className="px-4 pb-2">
+        <button
+          onClick={handleLogout}
+          className="w-full flex items-center gap-3.5 px-4 py-3.5 rounded-xl text-sm font-semibold text-red-500 hover:bg-red-50 transition-all"
+        >
+          <LogOut className="w-5 h-5" />
+          Logout
+        </button>
+      </div>
 
       {/* User Profile */}
       <div className="p-4 mx-4 mb-4 bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl border border-slate-200/60">

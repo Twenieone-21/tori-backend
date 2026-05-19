@@ -5,8 +5,17 @@ import Dashboard from "./pages/Dashboard";
 import Sales from "./pages/Sales";
 import Inventory from "./pages/Inventory";
 import Reports from "./pages/Reports";
+import LandingPage from "./pages/LandingPage";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
-const API_BASE = import.meta.env.VITE_API_URL || "https://tori-backend-kdum.onrender.com";
+const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
+// Protected route wrapper
+const ProtectedRoute = ({ children }) => {
+  const token = localStorage.getItem("token");
+  return token ? children : <Navigate to="/login" replace />;
+};
 
 function App() {
   const [inventory, setInventory] = useState([]);
@@ -123,22 +132,73 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div className="flex min-h-screen bg-slate-50">
-        <Sidebar />
-        <div className="ml-72 flex-1 p-8 max-w-[1400px]">
-          <Routes>
-            <Route path="/" element={<Dashboard inventory={inventory} transactions={transactions} />} />
-            <Route path="/sales" element={
-              <Sales inventory={inventory} setInventory={setInventory} recordSale={recordSale} updateProductStock={updateProductStock} transactions={transactions} />
-            } />
-            <Route path="/inventory" element={
-              <Inventory inventory={inventory} addProduct={addProduct} />
-            } />
-            <Route path="/reports" element={<Reports transactions={transactions} />} />
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </div>
-      </div>
+      <Routes>
+        {/* Public routes - no sidebar */}
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+
+        {/* Protected routes - with sidebar */}
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <div className="flex min-h-screen bg-slate-50">
+                <Sidebar />
+                <div className="ml-72 flex-1 p-8 max-w-[1400px]">
+                  <Dashboard inventory={inventory} transactions={transactions} />
+                </div>
+              </div>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/sales"
+          element={
+            <ProtectedRoute>
+              <div className="flex min-h-screen bg-slate-50">
+                <Sidebar />
+                <div className="ml-72 flex-1 p-8 max-w-[1400px]">
+                  <Sales
+                    inventory={inventory}
+                    setInventory={setInventory}
+                    recordSale={recordSale}
+                    updateProductStock={updateProductStock}
+                    transactions={transactions}
+                  />
+                </div>
+              </div>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/inventory"
+          element={
+            <ProtectedRoute>
+              <div className="flex min-h-screen bg-slate-50">
+                <Sidebar />
+                <div className="ml-72 flex-1 p-8 max-w-[1400px]">
+                  <Inventory inventory={inventory} addProduct={addProduct} />
+                </div>
+              </div>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/reports"
+          element={
+            <ProtectedRoute>
+              <div className="flex min-h-screen bg-slate-50">
+                <Sidebar />
+                <div className="ml-72 flex-1 p-8 max-w-[1400px]">
+                  <Reports transactions={transactions} />
+                </div>
+              </div>
+            </ProtectedRoute>
+          }
+        />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
     </BrowserRouter>
   );
 }
