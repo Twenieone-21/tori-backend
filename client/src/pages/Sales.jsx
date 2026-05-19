@@ -184,7 +184,7 @@ function Sales({ inventory, setInventory, recordSale, updateProductStock, transa
                     </div>
                   </div>
 
-                  <button onClick={handleCheckout} className="checkout-btn w-full text-white py-3.5 rounded-xl font-extrabold text-lg shadow-lg">
+                  <button onClick={handleCheckout} className="checkout-btn w-full text-black py-3.5 rounded-xl font-extrabold text-lg shadow-lg">
                     💳 Checkout
                   </button>
                 </>
