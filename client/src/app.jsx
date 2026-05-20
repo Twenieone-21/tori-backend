@@ -14,7 +14,7 @@ const API_BASE = import.meta.env.VITE_API_URL || "https://tori-backend-kdum.onre
 // Protected route wrapper
 const ProtectedRoute = ({ children }) => {
   const token = localStorage.getItem("token");
-  return token ? children : <Navigate to="/login" replace />;
+  return token ? children : <Navigate to="/" replace />;
 };
 
 function App() {
