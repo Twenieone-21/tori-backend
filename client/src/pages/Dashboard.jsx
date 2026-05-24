@@ -27,7 +27,7 @@ function Dashboard({ inventory, transactions }) {
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Hello, Nigga! 👋</h2>
+          <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Hello, User! 👋</h2>
           <p className="text-slate-500 mt-1.5 text-sm font-medium">Here's what's happening in your store today</p>
         </div>
         <div className="flex items-center gap-3">

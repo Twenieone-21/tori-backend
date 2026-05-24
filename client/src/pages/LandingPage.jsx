@@ -53,8 +53,8 @@ const LandingPage = () => {
     },
     {
       icon: <Shield className="w-6 h-6 text-white" />,
-      title: "Secure & Reliable",
-      desc: "Your data is safely stored in the cloud. No more lost records.",
+      title: "Secure Data Storage",
+      desc: "Store sales and inventory records digitally for easier tracking.",
       color: "bg-rose-500"
     },
     {

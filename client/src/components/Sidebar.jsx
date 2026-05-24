@@ -93,7 +93,7 @@ function Sidebar() {
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-sm font-bold text-slate-900 truncate">Mil</p>
-            <p className="text-xs text-slate-500">Store Manager</p>
+            <p className="text-xs text-slate-500">Store Owner</p>
           </div>
           <div className="w-2 h-2 bg-emerald-400 rounded-full"></div>
         </div>
