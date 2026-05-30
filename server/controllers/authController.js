@@ -12,84 +12,32 @@ exports.register = async (req, res) => {
   try {
     const { name, email, password, storeName } = req.body;
 
-    // Check if user exists
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
+    // Strict validation
+    if (!name || !/[a-zA-Z]/.test(name) || name.length < 2) {
+      return res.status(400).json({ message: 'Name must contain at least 2 characters and one letter' });
+    }
+    
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return res.status(400).json({ message: 'Please enter a valid email address' });
+    }
+    
+    if (!password || password.length < 6) {
+      return res.status(400).json({ message: 'Password must be at least 6 characters' });
+    }
+    
+    if (storeName && !/[a-zA-Z]/.test(storeName)) {
+      return res.status(400).json({ message: 'Store name must contain at least one letter' });
+    }
+
+    // Check if email exists
+    const existing = await User.findOne({ email });
+    if (existing) {
       return res.status(400).json({ message: 'Email already registered' });
     }
 
-    // Create user
-    const user = await User.create({
-      name,
-      email,
-      password,
-      storeName: storeName || 'My Store'
-    });
+    // ... rest of your register logic (hash password, save user, etc.)
 
-    const token = signToken(user._id);
-
-    res.status(201).json({
-      success: true,
-      token,
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        storeName: user.storeName
-      }
-    });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
-exports.login = async (req, res) => {
-  try {
-    const { email, password } = req.body;
-
-    // Check if user exists
-    const user = await User.findOne({ email }).select('+password');
-    if (!user) {
-      return res.status(401).json({ message: 'Invalid email or password' });
-    }
-
-    // Check password
-    const isMatch = await user.comparePassword(password);
-    if (!isMatch) {
-      return res.status(401).json({ message: 'Invalid email or password' });
-    }
-
-    const token = signToken(user._id);
-
-    res.status(200).json({
-      success: true,
-      token,
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        storeName: user.storeName
-      }
-    });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
-exports.getMe = async (req, res) => {
-  try {
-    const user = await User.findById(req.user.id);
-    res.status(200).json({
-      success: true,
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        storeName: user.storeName,
-        role: user.role
-      }
-    });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 };

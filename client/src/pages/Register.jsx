@@ -20,10 +20,44 @@ const Register = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const validate = () => {
+    const { name, email, password, storeName } = formData;
+
+    // Name: must contain at least one letter, not numbers-only
+    if (!name || name.length < 2 || !/^[a-zA-Z\s]+$/.test(name)) {
+      return 'Name must only contain letters and spaces, no numbers';
+    }
+
+    // Store name: if provided, must contain at least one letter
+    if (storeName && (storeName.length < 3 || !/[a-zA-Z]{3,}/.test(storeName))) {
+      return 'Store name must contain at least 3 letters';
+    }  
+
+    // Email: proper format
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return 'Please enter a valid email address';
+    }
+
+    // Password: minimum 6
+    if (!password || password.length < 6) {
+      return 'Password must be at least 6 characters';
+    }
+
+    return null;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
+
+    // Run validation before sending
+    const validationError = validate();
+    if (validationError) {
+      setError(validationError);
+      setLoading(false);
+      return;
+    }
 
     try {
       const res = await fetch(API_BASE + '/api/auth/register', {
@@ -73,6 +107,9 @@ const Register = () => {
                 type="text"
                 name="name"
                 required
+                minLength={2}
+                pattern=".*[a-zA-Z].*"
+                title="Must contain at least one letter"
                 value={formData.name}
                 onChange={handleChange}
                 className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -85,6 +122,8 @@ const Register = () => {
               <input
                 type="text"
                 name="storeName"
+                pattern=".*[a-zA-Z].{2,}"
+                title="Must contain at least one letter"
                 value={formData.storeName}
                 onChange={handleChange}
                 className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
